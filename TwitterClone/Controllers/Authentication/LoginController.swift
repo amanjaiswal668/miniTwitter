@@ -10,6 +10,8 @@ import UIKit
 
 class LoginController: UIViewController {
     
+    //    Setting up logo image view.
+    
     private let logoImageView: UIImageView = {
         
         let iv = UIImageView()
@@ -20,12 +22,13 @@ class LoginController: UIViewController {
         return iv
     }()
     
-    //    MARK: - COntainer views for login and password.
+    //    MARK: - Container views for login and password.
     
     private lazy var emailContainerView: UIView = {
         
         let image = #imageLiteral(resourceName: "ic_mail_outline_white_2x-1")
-        let view = Utilities().inputContainerView(withImage: image, textField: emailTextField)
+        let view = Utilities().inputContainerView(withImage: image,
+                                                  textField: emailTextField)
         
         
         return view
@@ -34,12 +37,13 @@ class LoginController: UIViewController {
     private lazy var passwordContainerView: UIView = {
         
         let image = #imageLiteral(resourceName: "ic_lock_outline_white_2x")
-        let view = Utilities().inputContainerView(withImage: image, textField: passwordTextField)
+        let view = Utilities().inputContainerView(withImage: image,
+                                                  textField: passwordTextField)
         
         return view
     }()
     
-    //    MARK: - Creating class for email and passwor text field.
+    //    MARK: - Creating class for email and password text field.
     
     private let emailTextField: UITextField = {
         
@@ -49,13 +53,14 @@ class LoginController: UIViewController {
     }()
     
     private let passwordTextField: UITextField = {
-
+        
         let tf = Utilities().textField(withPlaceholder: "Password")
         tf.isSecureTextEntry = true
         
         return tf
     }()
     
+    //   Setting up login button.
     
     private let loginButton: UIButton = {
         
@@ -68,18 +73,23 @@ class LoginController: UIViewController {
         button.layer.cornerRadius = 5
         button.titleLabel?.font = UIFont.systemFont(ofSize: 20)
         
-        button.addTarget(self, action: #selector(handleLogin), for: .touchUpInside)
+        button.addTarget(self,
+                         action: #selector(handleLogin),
+                         for: .touchUpInside)
         return button
     }()
     
+    //    Setting up dont have an account button.
     
     private let dontHaveAccountButton: UIButton = {
         
         let button = Utilities().attributedButton("Don't have an account? ", " SignUp")
-        button.addTarget(self, action: #selector(handleShowSignUp), for: .touchUpInside)
+        button.addTarget(self,
+                         action: #selector(handleShowSignUp),
+                         for: .touchUpInside)
         return button
     }()
-    //------------------------------------------------------------------------------------------------------------------------------------------------
+    //MARK: - ----------------------------------------------------------------------------------------------------------------------------------------------
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -97,9 +107,13 @@ class LoginController: UIViewController {
     
     @objc func handleShowSignUp(){
         
-        print("Signup is working!")
+        //        print("Signup is working!")
+        
+        let controller = SignUpViewController()
+        navigationController?.pushViewController(controller, animated: true)
     }
-    //  MARK: - Helpers.
+    //    MARK: - Helpers.
+    //    MARK: - Setting up function for configuring UI.
     
     func configureUI(){
         
@@ -108,13 +122,18 @@ class LoginController: UIViewController {
         view.backgroundColor = .twitterBlue
         
         view.addSubview(logoImageView)
-        logoImageView.centerX(inView: view, topAnchor: view.safeAreaLayoutGuide.topAnchor)
-        logoImageView.setDimensions(width: 150, height: 150 )
+        logoImageView.centerX(inView: view,
+                              topAnchor: view.safeAreaLayoutGuide.topAnchor)
+        
+        logoImageView.setDimensions(width: 150,
+                                    height: 150 )
         
         
-        //        MARK: - Creating a stack view programatically.
+        //    MARK: - Creating a stack view programatically.
         
-        let stack = UIStackView(arrangedSubviews: [emailContainerView, passwordContainerView, loginButton])
+        let stack = UIStackView(arrangedSubviews: [emailContainerView,
+                                                   passwordContainerView,
+                                                   loginButton])
         stack.axis = .vertical
         stack.distribution = .fillEqually
         stack.spacing = 20
@@ -125,6 +144,8 @@ class LoginController: UIViewController {
                      right: view.rightAnchor,
                      paddingLeft: 32,
                      paddingRight: 32)
+        
+        //        Setting don't have account button.
         
         view.addSubview(dontHaveAccountButton)
         dontHaveAccountButton.anchor(left: view.leftAnchor,

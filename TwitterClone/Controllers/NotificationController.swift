@@ -10,22 +10,22 @@ import UIKit
 
 class NotificationContorller: UIViewController {
     
-     override func viewDidLoad() {
-            super.viewDidLoad()
-
-            // Do any additional setup after loading the view.
-            
-            view.backgroundColor = .purple
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        
+        // Do any additional setup after loading the view.
+        
+        view.backgroundColor = .purple
         configureUI()
-        }
-        
-
+    }
+    
+    
     //MARK: - Helpers.
-    //    function to create all view controllers programatically.
+    //    function for configuring UI.
+    
+    func configureUI(){
         
-        func configureUI(){
-            
-             view.backgroundColor = .white
-            navigationItem.title = "Notifications"
-        }
+        view.backgroundColor = .white
+        navigationItem.title = "Notifications"
+    }
 }

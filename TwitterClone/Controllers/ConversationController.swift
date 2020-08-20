@@ -10,22 +10,22 @@ import UIKit
 
 class ConversationController: UIViewController {
     
-     override func viewDidLoad() {
-            super.viewDidLoad()
-
-            // Do any additional setup after loading the view.
-            
-            view.backgroundColor = .green
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        
+        // Do any additional setup after loading the view.
+        
+        view.backgroundColor = .green
         configureUI()
-        }
-        
-
+    }
+    
+    
     //MARK: - Helpers.
-    //    function to create all view controllers programatically.
+    //    function for configuring UI.
+    
+    func configureUI(){
         
-        func configureUI(){
-            
-             view.backgroundColor = .white
-            navigationItem.title = "Messages"
-        }
+        view.backgroundColor = .white
+        navigationItem.title = "Messages"
+    }
 }

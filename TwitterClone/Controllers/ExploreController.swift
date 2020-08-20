@@ -21,11 +21,11 @@ class ExploreController: UIViewController {
     
     
     //MARK: - Helpers.
-    //    function to create all view controllers programatically.
+    //    function for configuring UI.
     
     func configureUI(){
         
-         view.backgroundColor = .white
+        view.backgroundColor = .white
         navigationItem.title = "Explore"
     }
 }
