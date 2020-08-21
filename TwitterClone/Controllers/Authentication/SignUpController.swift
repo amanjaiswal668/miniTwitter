@@ -7,12 +7,16 @@
 //
 
 import UIKit
+import Firebase
+import FirebaseAuth
+import FirebaseDatabase
 
 class SignUpViewController: UIViewController {
     
     //    Setting up image picker controller for profile photo.
     
     private let imagePicker = UIImagePickerController()
+    private var profileImage: UIImage?
     
     //    Setting up profile photo button.
     
@@ -146,7 +150,38 @@ class SignUpViewController: UIViewController {
     
     @objc func handleRegistration(){
         
-        print("SignUp tapped.")
+        guard let profileImage = profileImage else {return}
+        
+        print("Select profile Image.")
+        
+        guard let email = emailTextField.text else {return}
+        
+        guard let password = passwordTextField.text else {return}
+        
+        guard  let fullname = fullNameTextField.text  else {return}
+        //
+        guard  let username = userNameTextField.text else {return}
+        
+        Auth.auth().createUser(withEmail: email, password: password) { (result, error) in
+            
+            if let error = error {
+                
+                print("error in creating user.\(error)")
+                return
+            }
+            
+            //            print("User Created.")
+            //            After successful creation of user.
+            
+            guard let uid = result?.user.uid else {return}
+            
+            let values = ["email": email, "username": username, "fullname" : fullname]
+            
+            REF_USERS.child(uid).updateChildValues(values) { (error,ref) in
+                
+                print("successfully updated user info.")
+            }
+        }
     }
     
     @objc func handleAddProfilePhoto(){
@@ -211,6 +246,7 @@ extension SignUpViewController:  UIImagePickerControllerDelegate, UINavigationCo
                                didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
         
         guard let profileImage = info[.editedImage] as? UIImage else {return}
+        self.profileImage = profileImage
         
         plusPhotoButton.layer.cornerRadius = 128/2
         plusPhotoButton.layer.masksToBounds = true
