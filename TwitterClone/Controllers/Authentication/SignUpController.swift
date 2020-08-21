@@ -39,8 +39,6 @@ class SignUpViewController: UIViewController {
         let image = #imageLiteral(resourceName: "ic_mail_outline_white_2x-1")
         let view = Utilities().inputContainerView(withImage: image,
                                                   textField: emailTextField)
-        
-        
         return view
     }()
     
@@ -49,8 +47,6 @@ class SignUpViewController: UIViewController {
         let image = #imageLiteral(resourceName: "ic_person_outline_white_2x")
         let view = Utilities().inputContainerView(withImage: image,
                                                   textField: fullNameTextField)
-        
-        
         return view
     }()
     
@@ -59,7 +55,6 @@ class SignUpViewController: UIViewController {
         let image = #imageLiteral(resourceName: "ic_person_outline_white_2x")
         let view = Utilities().inputContainerView(withImage: image,
                                                   textField: userNameTextField)
-        
         return view
     }()
     
@@ -68,7 +63,6 @@ class SignUpViewController: UIViewController {
         let image = #imageLiteral(resourceName: "ic_lock_outline_white_2x")
         let view = Utilities().inputContainerView(withImage: image,
                                                   textField: passwordTextField)
-        
         return view
     }()
     
@@ -148,11 +142,11 @@ class SignUpViewController: UIViewController {
         
     }
     
+    //    Signing up users after successfull registraation ansaving user credentials in firebase database.
+    
     @objc func handleRegistration(){
         
         guard let profileImage = profileImage else {return}
-        
-        print("Select profile Image.")
         
         guard let email = emailTextField.text else {return}
         
@@ -162,27 +156,25 @@ class SignUpViewController: UIViewController {
         //
         guard  let username = userNameTextField.text else {return}
         
-        Auth.auth().createUser(withEmail: email, password: password) { (result, error) in
+        let credentials = AuthCredentials(email: email,
+                                          password: password,
+                                          fullName: fullname,
+                                          userName: username,
+                                          profileImage: profileImage)
+        
+        AuthService.shared.registerUser(credentials: credentials) { (error, ref) in
             
-            if let error = error {
-                
-                print("error in creating user.\(error)")
-                return
-            }
+            guard let window = UIApplication.shared.windows.filter({$0.isKeyWindow}).first else {return}
             
-            //            print("User Created.")
-            //            After successful creation of user.
+            guard let tabController = window.rootViewController as? MainTabViewController
+                else {return}
             
-            guard let uid = result?.user.uid else {return}
-            
-            let values = ["email": email, "username": username, "fullname" : fullname]
-            
-            REF_USERS.child(uid).updateChildValues(values) { (error,ref) in
-                
-                print("successfully updated user info.")
-            }
+            tabController.authenticateUserAndConfigureUI()
+            self.dismiss(animated: true, completion: nil)
         }
     }
+    
+    //    function for adding profile image.
     
     @objc func handleAddProfilePhoto(){
         

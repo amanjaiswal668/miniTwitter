@@ -29,8 +29,6 @@ class LoginController: UIViewController {
         let image = #imageLiteral(resourceName: "ic_mail_outline_white_2x-1")
         let view = Utilities().inputContainerView(withImage: image,
                                                   textField: emailTextField)
-        
-        
         return view
     }()
     
@@ -39,7 +37,6 @@ class LoginController: UIViewController {
         let image = #imageLiteral(resourceName: "ic_lock_outline_white_2x")
         let view = Utilities().inputContainerView(withImage: image,
                                                   textField: passwordTextField)
-        
         return view
     }()
     
@@ -48,7 +45,6 @@ class LoginController: UIViewController {
     private let emailTextField: UITextField = {
         
         let tf = Utilities().textField(withPlaceholder: "Email")
-        
         return tf
     }()
     
@@ -56,7 +52,6 @@ class LoginController: UIViewController {
         
         let tf = Utilities().textField(withPlaceholder: "Password")
         tf.isSecureTextEntry = true
-        
         return tf
     }()
     
@@ -94,20 +89,42 @@ class LoginController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        //        Calling configureUI function.
         configureUI()
     }
     
     
-    //  MARK: - Selectors.
+    //  MARK: - Selectors, signing in users after authentication.
     
     @objc func handleLogin(){
         
-        print("Button pressed success for login.")
+        guard let email = emailTextField.text else {return}
+        guard let password = passwordTextField.text else {return}
+        
+        //        AuthServire is a struct defined in AuthenticationServices.
+        
+        AuthService.shared.logUserIn(withEmail: email, password: password) { (result, error) in
+            
+            if let error = error {
+                
+                print("error logging user\(error)")
+                return
+            }
+            
+            guard let window = UIApplication.shared.windows.filter({$0.isKeyWindow}).first else {return}
+            
+            //            print("user logged in.")
+            guard let tabController = window.rootViewController as? MainTabViewController
+                else {return}
+            
+            tabController.authenticateUserAndConfigureUI()
+            self.dismiss(animated: true, completion: nil)
+        }
+        
     }
+    //    Transistion to signup screen from login screen.
     
     @objc func handleShowSignUp(){
-        
-        //        print("Signup is working!")
         
         let controller = SignUpViewController()
         navigationController?.pushViewController(controller, animated: true)
