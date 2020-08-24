@@ -154,7 +154,7 @@ class SignUpViewController: UIViewController {
         
         guard  let fullname = fullNameTextField.text  else {return}
         //
-        guard  let username = userNameTextField.text else {return}
+        guard  let username = userNameTextField.text?.lowercased() else {return}
         
         let credentials = AuthCredentials(email: email,
                                           password: password,

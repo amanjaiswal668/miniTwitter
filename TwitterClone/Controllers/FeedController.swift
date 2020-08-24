@@ -22,6 +22,12 @@ class FeedController: UICollectionViewController {
         }
     }
     
+    
+    private var tweets = [Tweet]() {
+        didSet {
+            collectionView.reloadData()
+        }
+    }
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -31,14 +37,15 @@ class FeedController: UICollectionViewController {
         
     }
     
-//    MARK: - Calling API.
+    //    MARK: - Calling API.
     
-//    Calling tweet API.
+    //    Calling tweet API.
     
     func fetchTweets() {
         tweetService.shared.fetchTweets { tweet in
-        
-            print("tweets are : - \(tweet)")
+            
+            //            print("tweets are : - \(tweet)")
+            self.tweets = tweet
         }
     }
     
@@ -51,12 +58,12 @@ class FeedController: UICollectionViewController {
         
         collectionView.register(TweetCell.self, forCellWithReuseIdentifier: reuseIdentifier)
         collectionView.backgroundColor = .white
-    
+        
         let imageView = UIImageView(image: UIImage(named: "twitter_logo_blue"))
         imageView.contentMode = .scaleAspectFit
         imageView.setDimensions(width: 44, height: 44)
         navigationItem.titleView = imageView
-    
+        
     }
     //    function for configuring left bar button for setting profile image.
     
@@ -80,23 +87,33 @@ class FeedController: UICollectionViewController {
 
 //MARK: - Extensions
 
-//Setting extensions for
+//Setting extensions for creating collection view in feed controller to show fetched tweet from database.
 
 extension FeedController {
     
-    override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 5
+    override func collectionView(_ collectionView: UICollectionView,
+                                 numberOfItemsInSection section: Int) -> Int {
+        return tweets.count
     }
     
-    override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: indexPath) as! TweetCell
+    override func collectionView(_ collectionView: UICollectionView,
+                                 cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier,
+                                                      for: indexPath) as! TweetCell
+        
+        cell.tweet = tweets[indexPath.row]
+        
         return cell
     }
 }
 
+//Customizing collection view inside FeedController.
+
 extension FeedController: UICollectionViewDelegateFlowLayout{
     
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: view.frame.width, height: 200)
+    func collectionView(_ collectionView: UICollectionView,
+                        layout collectionViewLayout: UICollectionViewLayout,
+                        sizeForItemAt indexPath: IndexPath) -> CGSize {
+        return CGSize(width: view.frame.width, height: 130)
     }
 }

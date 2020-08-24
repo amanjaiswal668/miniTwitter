@@ -90,7 +90,8 @@ class MainTabViewController: UITabBarController {
     
     func fetchUser(){
         
-        UserService.shared.fetchUser { User in
+        guard let uid = Auth.auth().currentUser?.uid else {return}
+        UserService.shared.fetchUser(uid: uid) { User in
             
             self.user = User
         }
@@ -155,7 +156,8 @@ class MainTabViewController: UITabBarController {
     
     //    MARK: - Function for setting up navigation controller programatically.
     
-    func templetNavigationController(image: UIImage?, rootViewController: UIViewController) -> UINavigationController
+    func templetNavigationController(image: UIImage?,
+                                     rootViewController: UIViewController) -> UINavigationController
     {
         let nav = UINavigationController(rootViewController: rootViewController)
         nav.tabBarItem.image = image

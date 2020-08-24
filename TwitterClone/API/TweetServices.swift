@@ -35,7 +35,9 @@ struct tweetService {
                                                      withCompletionBlock: completion)
     }
     
-//    MARK: - Fetch tweets.
+    //    MARK: - Fetch tweets.
+    
+    //    Function for fetching tweets from the database.
     
     func fetchTweets(completion: @escaping([Tweet]) -> Void){
         
@@ -43,15 +45,23 @@ struct tweetService {
         
         REF_TWEETS.observe(.childAdded) {snapshot in
             
-//            print("Snapshot of tweets is \(snapshot.value)")
+            //            print("Snapshot of tweets is \(snapshot.value)")
             
             guard let dictionary = snapshot.value as? [String: Any] else {return}
             
-            let tweetId = snapshot.key
-            let tweet = Tweet(tweetId: tweetId, dictionary: dictionary)
-            tweets.append(tweet)
-            completion(tweets)
+            guard let uid = dictionary["uid"] as? String else {return}
             
+            let tweetId = snapshot.key
+            
+            UserService.shared.fetchUser(uid: uid) { user in
+                
+                let tweet = Tweet(user: user,
+                                  tweetId: tweetId,
+                                  dictionary: dictionary)
+                
+                tweets.append(tweet)
+                completion(tweets)
+            }
         }
     }
 }

@@ -31,6 +31,7 @@
 		F191FAA824F2DAA0001E3BEE /* TweetServices.swift in Sources */ = {isa = PBXBuildFile; fileRef = F191FAA724F2DAA0001E3BEE /* TweetServices.swift */; };
 		F191FAAA24F2E7C9001E3BEE /* Tweet.swift in Sources */ = {isa = PBXBuildFile; fileRef = F191FAA924F2E7C9001E3BEE /* Tweet.swift */; };
 		F1D5729A24EEFC4C0055914F /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1D5729924EEFC4C0055914F /* Constants.swift */; };
+		F1F505C724F4472600A3D138 /* TweetViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1F505C624F4472600A3D138 /* TweetViewModel.swift */; };
 		F1F9A4C024F3D88F0013DA5B /* TweetCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1F9A4BF24F3D88F0013DA5B /* TweetCell.swift */; };
 /* End PBXBuildFile section */
 
@@ -63,6 +64,7 @@
 		F191FAA724F2DAA0001E3BEE /* TweetServices.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TweetServices.swift; sourceTree = "<group>"; };
 		F191FAA924F2E7C9001E3BEE /* Tweet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tweet.swift; sourceTree = "<group>"; };
 		F1D5729924EEFC4C0055914F /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
+		F1F505C624F4472600A3D138 /* TweetViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TweetViewModel.swift; sourceTree = "<group>"; };
 		F1F9A4BF24F3D88F0013DA5B /* TweetCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TweetCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -160,6 +162,7 @@
 		F17851D724ED8254003E0356 /* ViewModel */ = {
 			isa = PBXGroup;
 			children = (
+				F1F505C624F4472600A3D138 /* TweetViewModel.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -332,6 +335,7 @@
 				F17851EB24EDAFA1003E0356 /* SignUpController.swift in Sources */,
 				F17851C424ED81AA003E0356 /* SceneDelegate.swift in Sources */,
 				F17851DC24ED8443003E0356 /* MainTabViewController.swift in Sources */,
+				F1F505C724F4472600A3D138 /* TweetViewModel.swift in Sources */,
 				F17851E424ED88B9003E0356 /* ConversationController.swift in Sources */,
 				F17851DE24ED8745003E0356 /* FeedController.swift in Sources */,
 				F1D5729A24EEFC4C0055914F /* Constants.swift in Sources */,
