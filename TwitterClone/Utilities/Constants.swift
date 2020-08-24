@@ -22,3 +22,7 @@ let STORAGE_PROFILE_IMAGES = STORAGE_REF.child("profile_images")
 let DB_REF = Database.database().reference()
 
 let REF_USERS = DB_REF.child("users")
+
+//MARK: - Creating references for Tweets.
+
+let REF_TWEETS = DB_REF.child("tweets")

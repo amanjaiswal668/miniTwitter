@@ -27,6 +27,17 @@ class MainTabViewController: UITabBarController {
                          for: .touchUpInside)
         return button
     }()
+    
+    //creating and hence setting user inside FeedController.
+    
+    var user: User? {
+        didSet{
+            guard let nav = viewControllers?[0] as? UINavigationController else{return}
+            guard let feed = nav.viewControllers.first as? FeedController else{return}
+            
+            feed.user = user
+        }
+    }
     //    MARK: - ----------------------------------------------------------------------------------------------------------------------------------------
     
     override func viewDidLoad() {
@@ -36,7 +47,7 @@ class MainTabViewController: UITabBarController {
         
         view.backgroundColor = .twitterBlue
         authenticateUserAndConfigureUI()
-        //                signOut()
+        //                        signOut()
         
     }
     
@@ -57,6 +68,7 @@ class MainTabViewController: UITabBarController {
         else{
             configureUI()
             configureViewController()
+            fetchUser()
             print("Welcome User.")
         }
     }
@@ -74,11 +86,27 @@ class MainTabViewController: UITabBarController {
         }
     }
     
+    //  Calling function for fetching user information from Database.
+    
+    func fetchUser(){
+        
+        UserService.shared.fetchUser { User in
+            
+            self.user = User
+        }
+    }
+    
     // MARK: - Selectors
     
     @objc func actionButtonTapped(){
         
         print("Button pressed working!")
+        
+        guard let user = user else {return}
+        let controller = UploadTweetController(user: user)
+        let nav = UINavigationController(rootViewController: controller)
+        nav.modalPresentationStyle = .fullScreen
+        present(nav, animated: true, completion: nil)
     }
     
     //MARK: - Helpers.
@@ -101,7 +129,7 @@ class MainTabViewController: UITabBarController {
     
     func configureViewController(){
         
-        let feed = FeedController()
+        let feed = FeedController(collectionViewLayout: UICollectionViewFlowLayout())
         
         let nav1 = templetNavigationController(image: UIImage(named: "home_unselected"),
                                                rootViewController: feed)

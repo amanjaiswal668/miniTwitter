@@ -31,7 +31,8 @@ struct AuthService{
     
     //    MARK: - Function for registering user.
     
-    func registerUser(credentials: AuthCredentials, completion: @escaping (Error?, DatabaseReference) -> Void) {
+    func registerUser(credentials: AuthCredentials,
+                      completion: @escaping (Error?, DatabaseReference) -> Void) {
         
         let email = credentials.email
         let password = credentials.password
@@ -51,7 +52,9 @@ struct AuthService{
                 
                 //                Creating users.
                 
-                Auth.auth().createUser(withEmail: email, password: password) { (result, error) in
+                Auth.auth().createUser(withEmail: email,
+                                       password: password)
+                { (result, error) in
                     
                     if let error = error {
                         
@@ -71,7 +74,8 @@ struct AuthService{
                     // updated datain firebase databse after successful creation of user.
                     
                     
-                    REF_USERS.child(uid).updateChildValues(values, withCompletionBlock: completion)
+                    REF_USERS.child(uid).updateChildValues(values,
+                                                           withCompletionBlock: completion)
                 }
             }
         }
@@ -79,12 +83,13 @@ struct AuthService{
     
     //    MARK: - Function for loging in user.
     
-    func logUserIn(withEmail email: String, password: String, completion: AuthDataResultCallback?){
+    func logUserIn(withEmail email: String,
+                   password: String,
+                   completion: AuthDataResultCallback?){
         
-        Auth.auth().signIn(withEmail: email, password: password, completion: completion) 
+        Auth.auth().signIn(withEmail: email,
+                           password: password,
+                           completion: completion)
         
     }
-    
-    
 }
-

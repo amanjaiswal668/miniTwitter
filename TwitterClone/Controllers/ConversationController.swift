@@ -19,7 +19,6 @@ class ConversationController: UIViewController {
         configureUI()
     }
     
-    
     //MARK: - Helpers.
     //    function for configuring UI.
     
